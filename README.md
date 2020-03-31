@@ -84,5 +84,3 @@ For that I have also added this chunk of code,
 const socket = process.env.DOCKER_SOCKET || '/var/run/docker.sock';
 const docker = new Docker(socket);
 ```
-
-I beleive this will work on linux. But if this doesn't please give me an email "towfiqul.alom@tuni.fi". I will fix it or recode this feature.
