@@ -1,0 +1,35 @@
+version: '3.7'
+services:
+  gitlab:
+    image: gitlab/gitlab-ce:latest
+    hostname: localhost
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        gitlab_rails['gitlab_shell_ssh_port'] = 8822
+    ports:
+      - "443:443"
+      - "8880:80"
+      - "8822:22"
+    volumes:
+      - gitlab-config:/etc/gitlab
+      - gitlab-data:/var/opt/gitlab
+    restart: always
+    networks:
+      gitlabnetwork: {}
+  gitlab-runner:
+    image: gitlab/gitlab-runner:latest
+    ports:
+      - "8093:8093"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - gitlab-runner-config:/etc/gitlab-runner
+    restart: always
+    networks:
+      gitlabnetwork: {}
+networks:
+  gitlabnetwork:
+    driver: overlay
+volumes:
+  gitlab-data:
+  gitlab-config:
+  gitlab-runner-config:

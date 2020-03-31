@@ -1,0 +1,34 @@
+stages:
+  - build
+  - test
+build:
+  image:
+    name: docker/compose:1.22.0
+    entrypoint: ["/bin/sh", "-c"]
+  stage: build
+  
+  services:
+    - docker:dind
+
+  before_script:
+    - docker version
+    - docker-compose version
+  tags:
+    - docker
+  script:
+    - cd components
+    - docker-compose up -d
+    - docker ps -a
+    - docker-compose down
+test:
+  image: node:10
+  stage: test
+  tags:
+    - docker
+  script:
+    - cd components
+    - cd service1
+    - npm install
+    - node src/index.js &
+    - npm test
+

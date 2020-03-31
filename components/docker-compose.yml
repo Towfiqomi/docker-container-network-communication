@@ -1,0 +1,27 @@
+version: '3.7'
+services:
+  service1:
+    build:
+      context: ./service1
+      dockerfile: Dockerfile
+    image: ${CI_REGISTRY_IMAGE-local}/service1:${CI_COMMIT_SHORT_SHA-local}
+    container_name: app-service1
+    restart: on-failure
+    ports:
+      - "8001:8001"
+    links: 
+      - service2
+    #volumes: 
+    #  - ./service1/logs/activity/activity.logs:logs/activity/activity.json
+    command: node src/index.js
+
+  service2:
+    build:
+      context: ./service2
+      dockerfile: Dockerfile
+    image: "${CI_REGISTRY_IMAGE-local}/service2:${CI_COMMIT_SHORT_SHA-local}"
+    container_name: app-service2
+    restart: on-failure
+    ports:
+      - "8000:8000"
+    command: node src/index.js
