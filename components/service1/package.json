@@ -13,7 +13,7 @@
   "dependencies": {
     "chai": "^4.2.0",
     "dockerode": "^3.0.2",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-ip": "^1.0.3",
     "log4js": "^6.1.0",
     "node-docker-api": "^1.1.22",
